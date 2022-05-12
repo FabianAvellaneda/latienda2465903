@@ -76,4 +76,7 @@ Route::get('paises', function(){
     echo "</pre>";*/
     //mostrar la vista:
     return view('paises')->with("paises", $paises);
+}); 
+Route::get('prueba', function(){
+    return view('Productos.new');
 });
