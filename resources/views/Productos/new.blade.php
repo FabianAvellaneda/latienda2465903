@@ -3,7 +3,7 @@
 @section('contenido')
 
 <div class="row">
-    <h1 class="cyan-text"> Nuevo Producto </h1>
+    <h1 class="teal-text"> Nuevo Producto </h1>
 </div>
 <div class="row">
     <form class="col s12">
@@ -16,10 +16,21 @@
         <input id="name" type="text" class="validate">
           <label for="name">Precio</label>
         </div>
+        <div class="row">
         <div class="input-field col s6">
           <textarea id="textarea1" class="materialize-textarea"></textarea>
           <label for="textarea1">Descripcion</label>
         </div>
+        <div class="input-field col s6">
+    <select name="" id="marca">
+      @foreach ($marcas as $marca)
+      <option value="">
+        {{ $marca->nombre}}
+      @endforeach
+    </select>
+    <label for="marca">Elija Marca</label>
+  </div>
+  <div class="row">
         <div class="btn">
         <span>Imagen del Producto</span>
         <input type="file">

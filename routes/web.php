@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\controllers\ProductoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,3 +80,7 @@ Route::get('paises', function(){
 Route::get('prueba', function(){
     return view('Productos.new');
 });
+
+//rutas rest - resource
+Route::resource('Productos', 
+ProductoController::class );
