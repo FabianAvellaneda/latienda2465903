@@ -6,6 +6,7 @@ use App\Models\Categoria;
 use App\Models\Marca;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -42,9 +43,54 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+            //1. Estableces Reghlas de Validacion para cada dato
+            $reglas = [
+                "nombre" => 'required|alpha',
+                "precio"=> 'required|numeric',
+                "descripcion" => 'required|min:15|max:30',
+                "marca" => 'required',
+                "categoria" => 'required'
+            ];
+            //mensajes:
+            $mensajes = [
+                "required" => "Campo Obligatorio",
+                "alpha" => "Solo letras",
+                "numeric" => "Solo numeros",
+                "min" => "minimo 15 caracteres",
+                "max" => "maximo 30 caracteres"
+            ];
+            //2. Crear el objeto validador
+            $v =  Validator::make($r->all(), $reglas, $mensajes);
+            //3. Validar la inpt data
+            if($v->fails()){
+                //validacion fallida
+                //Redireccionar a Formulario
+                return redirect('Productos/create')
+                ->withErrors($v)
+                ->withInput()
+                ->withInput();
+            }else{
+                //validacion correcta
+                //crear nuevo producto <<entity>>
+            $p = new Producto;
+            //asiganar valores a los atributos del objeto
+            $p ->nombre = $r->nombre;
+            $p ->precio = $r->precio;
+            $p ->descripcion = $r->descripcion;
+            $p ->marca_id = $r->marca;
+            $p ->categoria_id = $r->categoria;
+            $p ->imagen = $r->imagen;
+            //guardar en BD 
+            $p->save();
+            //Redireccionar a Formulario
+            return redirect('Productos/create')->with('mensajito',"Producto Registrado");
+            }
+            //verificar datos recibidos desde form
+            /*echo"<pre>";
+            var_dump($r->all());
+            echo"</pre>";*/
     }
 
     /**
