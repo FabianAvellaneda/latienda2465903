@@ -17,7 +17,10 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        echo"aqui va a ir el catalogo de productos";
+        //seleccionar todos los productos de la bd
+        $productos = Producto::all();
+        //mostrar catalogo de productos llevando lista de productos
+        return view('Productos.index') -> with('Productos', $productos);
     }
 
     /**
@@ -85,7 +88,7 @@ class ProductoController extends Controller
             $ruta= public_path()."/img/";
             //mover el archivo
             $archivo->move($ruta, $nombre_archivo);
-            
+
                 //validacion correcta
                 //crear nuevo producto <<entity>>
             $p = new Producto;
