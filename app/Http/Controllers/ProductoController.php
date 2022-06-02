@@ -45,13 +45,18 @@ class ProductoController extends Controller
      */
     public function store(Request $r)
     {
+
+            //analaiar la input data "imagen"
+            //echo "<pre>";
+            //var_dump($r->imagen);
             //1. Estableces Reghlas de Validacion para cada dato
             $reglas = [
                 "nombre" => 'required|alpha',
                 "precio"=> 'required|numeric',
                 "descripcion" => 'required|min:15|max:30',
                 "marca" => 'required',
-                "categoria" => 'required'
+                "categoria" => 'required',
+                "imagen" => 'required|image'
             ];
             //mensajes:
             $mensajes = [
@@ -59,7 +64,8 @@ class ProductoController extends Controller
                 "alpha" => "Solo letras",
                 "numeric" => "Solo numeros",
                 "min" => "minimo 15 caracteres",
-                "max" => "maximo 30 caracteres"
+                "max" => "maximo 30 caracteres",
+                "image" => "El archivo debe ser una imagen"
             ];
             //2. Crear el objeto validador
             $v =  Validator::make($r->all(), $reglas, $mensajes);
@@ -72,6 +78,14 @@ class ProductoController extends Controller
                 ->withInput()
                 ->withInput();
             }else{
+             //acceder a propiedades del obejeto cargado
+            $archivo = $r->imagen;
+            $nombre_archivo = $archivo ->getClientOriginalName();
+            //establecer la ubicacion donde se almacena el archivo
+            $ruta= public_path()."/img/";
+            //mover el archivo
+            $archivo->move($ruta, $nombre_archivo);
+            
                 //validacion correcta
                 //crear nuevo producto <<entity>>
             $p = new Producto;
@@ -81,12 +95,13 @@ class ProductoController extends Controller
             $p ->descripcion = $r->descripcion;
             $p ->marca_id = $r->marca;
             $p ->categoria_id = $r->categoria;
-            $p ->imagen = $r->imagen;
+            $p ->imagen = $nombre_archivo;
             //guardar en BD 
             $p->save();
             //Redireccionar a Formulario
             return redirect('Productos/create')->with('mensajito',"Producto Registrado");
             }
+
             //verificar datos recibidos desde form
             /*echo"<pre>";
             var_dump($r->all());
