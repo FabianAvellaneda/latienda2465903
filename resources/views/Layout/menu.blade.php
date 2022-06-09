@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="{{ asset('materialize/css/materialize.css') }}" />
     <title>TiendaPHP</title>
 </head>
-<body>
+<body class="grey lighten-3">
 <nav class="teal" >
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">LaTiendaPHP</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html">Productos</a></li>
-        <li><a href="badges.html">Pedidos</a></li>
+      <a href="#!" class="brand-logo" style="margin-left:2%;" >LaTiendaPHP</a>
+      <ul class="right hide-on-med-and-down"  style="margin-right:2%;">
+      <li><a href="{{ route('Productos.create') }}" >Agregar Producto</a></li>
+        <li><a href="{{ route('Productos.index') }}">Productos</a></li>
+        <li><a href="{{ route('carrito.index') }}">Carrito</a></li>
       </ul>
     </div>
   </nav>

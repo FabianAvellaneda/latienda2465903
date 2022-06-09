@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\controllers\ProductoController;
+use App\Http\controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,3 +85,9 @@ Route::get('prueba', function(){
 //rutas rest - resource
 Route::resource('Productos', 
 ProductoController::class );
+
+Route::resource('carrito', 
+CartController::class,
+[
+    'only' => ['store','index','destroy']
+]);

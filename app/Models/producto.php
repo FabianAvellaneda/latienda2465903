@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\producto;
 
 class producto extends Model
 {
@@ -13,6 +12,10 @@ class producto extends Model
     //funcion
     public function categoria(){
         return $this -> belongsTo( categoria::class );
+
+    }
+    public function marca(){
+        return $this -> belongsTo( marca::class );
 
     }
 
